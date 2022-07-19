@@ -221,33 +221,7 @@ float ultrasonic_measure(){
     
     return distanceCm;
     }
-    
-void motion_com(){
-  
-    // reading the IR values
-    //float IR1valueD = digitalRead(pinIR1d);
-    float IR2valueD = digitalRead(pinIR2d);
-    float IR3valueD = digitalRead(pinIR3d);
-    distCm = ultrasonic_measure();
-    
-    if((IR2valueD == 0)&&(IR3valueD == 0)){forward();} 
 
-    else if((IR2valueD == 1)&&(IR3valueD == 0)){turnLeft(); } 
-
-    else if((IR2valueD == 0)&&(IR3valueD == 1)){turnRight(); } 
-
-    else if((IR2valueD == 1)&&(IR3valueD == 1)){Stop();} 
-
-    if((distCm <= 15)){Stop();
-    //digitalWrite(obstacle_detect, HIGH);
-    } 
-    else {
-      //digitalWrite(obstacle_detect, LOW);
-      
-    }
-    
-    
-}
 
 void measure_and_publish_value(String control_com){
       char buf[50];
@@ -349,7 +323,7 @@ void loop() {
       // Publishes new data every 100 milli seconds
       if (now - lastMeasure > 100) {
         lastMeasure = now;
-        //forward();
+        forward();
         measure_and_publish_value(control_command);
         Serial.printf("Forward");
         Serial.println("");
@@ -361,7 +335,7 @@ void loop() {
       // Publishes new data every 100 milli seconds
       if (now - lastMeasure > 100) {
         lastMeasure = now;
-        //turnRight();
+        turnRight();
         measure_and_publish_value(control_command);
         Serial.printf("Right");
         Serial.println("");
@@ -373,7 +347,7 @@ void loop() {
       // Publishes new data every 100 milli seconds
       if (now - lastMeasure > 100) {
         lastMeasure = now;
-        //turnLeft();
+        turnLeft();
         measure_and_publish_value(control_command);
         Serial.printf("Left");
         Serial.println("");
@@ -385,7 +359,7 @@ void loop() {
         Serial.printf("Stop");
         Serial.println("");
         start_contrl = 0;
-       Stop()
+       Stop();
     }
         
     else if (control_command == "Obstacle"){
@@ -396,8 +370,5 @@ void loop() {
         //digitalWrite(obstacle_detect, HIGH);
     }
     
-    if (start_contrl == 1) {motion_com();
-    Serial.println("");
-    }
   
 }
